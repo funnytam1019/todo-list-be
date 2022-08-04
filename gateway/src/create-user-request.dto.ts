@@ -1,4 +1,5 @@
-export class createUserRequest {
-   email: string;
-   password: string;
+export class CreateUserRequest {
+  id: number;
+  name: string;
+  age: number;
 }
