@@ -3,9 +3,10 @@ import { ClientProxy } from '@nestjs/microservices';
 import { firstValueFrom } from 'rxjs';
 import { CreateUserResponseDTO } from './interfaces/user/dto/create-user-response.dto';
 import { CreateUserDTO } from './interfaces/user/dto/create-user.dto';
-import { GetUserByIdResponseDTO } from './interfaces/user/dto/get-user-by-id-response.dto';
+import { UserGetResponseDTO } from './interfaces/user/dto/get-user-response.dto';
+import { UserGetDTO } from './interfaces/user/dto/get-user.dto';
 import { IServiceUserCreateResponse } from './interfaces/user/service-user-create-response.interface';
-import { IServiceUserGetByIdResponse } from './interfaces/user/service-user-get-by-id-response.interface';
+import { IServiceUserGet } from './interfaces/user/service-user-get-by-id-response.interface';
 import { IUser } from './interfaces/user/user.interface';
 
 @Controller('users')
@@ -15,15 +16,27 @@ export class UsersController {
   ) {}
 
   @Get()
-  public async getUser() {
-    return this.userServiceClient.send('get_users', {});
+  public async getUser(
+    @Body() userRequest: UserGetDTO 
+  ): Promise<UserGetResponseDTO> {
+    const userResponse: IServiceUserGet = 
+      await firstValueFrom(
+        this.userServiceClient.send('user_get', userRequest)
+      );
+      return {
+        message: userResponse.message,
+        data: {
+          user: userResponse.user,
+        },
+        errors: null
+      }
   }
 
   @Get(':id')
   public async getUserById(
     @Param('id') id: any
-  ): Promise<GetUserByIdResponseDTO> {
-    const userResponse: IServiceUserGetByIdResponse = 
+  ): Promise<UserGetResponseDTO> {
+    const userResponse: IServiceUserGet = 
       await firstValueFrom(
         this.userServiceClient.send('user_get_by_id', id)
       );
