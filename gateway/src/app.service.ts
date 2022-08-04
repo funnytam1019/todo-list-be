@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { createTodoRequest } from './create-todo-request.dto';
-import { CreateUserRequest } from './create-user-request.dto';
+import { CreateTodoRequestDTO } from './interfaces/user/dto/create-todo-request.dto';
+import { CreateUserRequestDTO } from './interfaces/user/dto/create-user-request.dto';
 
 @Injectable()
 export class AppService {
@@ -11,14 +11,14 @@ export class AppService {
     @Inject('TODO_SERVICE') private readonly TodoClient: ClientProxy
   ) {}
 
-  createUser(createUserRequest: CreateUserRequest) {
+  createUser(createUserRequest: CreateUserRequestDTO) {
     this.UserClient.emit(
       'user_created',
       createUserRequest
     );
   }
 
-  createTodo(createTodoRequest: createTodoRequest) {
+  createTodo(createTodoRequest: CreateTodoRequestDTO) {
    this.TodoClient.emit(
       'todo_created',
       createTodoRequest
