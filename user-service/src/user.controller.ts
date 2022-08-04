@@ -46,12 +46,10 @@ export class UserController {
     let result: IUserCreateResponse = <any>{};
 
     if(!userParams) {
-      result = {
-        status: HttpStatus.BAD_REQUEST,
-        message: 'user_create_bad_request',
-        user: null,
-        errors:null,
-      }; 
+      result.status = HttpStatus.BAD_REQUEST;
+      result.message = 'user_create_bad_request';
+      result.user = null;
+      result.errors = null;
     } else {
        const userWithEmail = await this.userService.searchUser({
           email: userParams.email
