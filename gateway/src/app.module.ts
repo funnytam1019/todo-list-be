@@ -1,28 +1,17 @@
 import { Module } from '@nestjs/common';
-import { ClientProxyFactory, ClientsModule, Transport } from '@nestjs/microservices';
+import { ConfigModule } from '@nestjs/config';
+import { ClientProxyFactory } from '@nestjs/microservices';
 import { AppController } from './app.controller';
+import { AppService } from './app.service';
 import { ConfigService } from './services/config/config.service';
 
 @Module({
   imports: [
-    ClientsModule.register([
-      {
-        name: 'TODO_SERVICE',
-        transport: Transport.TCP,
-        options: {
-          host: '127.0.0.1',
-          port: 3001
-        }
-      },
-      {
-        name: 'USER_SERVICE',
-        transport: Transport.TCP,
-        options: {
-          host: '127.0.0.1',
-          port: 3002
-        }
-      }
-    ]),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: '../.env'
+    }),
+
   ],
   controllers: [AppController],
   providers: [
@@ -33,11 +22,8 @@ import { ConfigService } from './services/config/config.service';
           const userServiceOptions = configService.get('userService');
           return ClientProxyFactory.create(userServiceOptions);
         },
+        inject: [ConfigService],
       }
-    
-    
-    
-    
   ],
 })
-export class AppModule { }
+export class AppModule {}

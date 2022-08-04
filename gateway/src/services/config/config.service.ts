@@ -13,13 +13,6 @@ export class ConfigService {
       },
       transport: Transport.TCP,
     };
-    this.envConfig.todoService = {
-      options: {
-        port: process.env.TODO_SERVICE_PORT,
-        host: process.env.TODO_SERVICE_HOST,
-      },
-      transport: Transport.TCP,
-    };
   }
 
   get(key: string): any {

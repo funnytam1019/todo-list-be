@@ -1,20 +1,30 @@
-import { Body, Controller, Post } from '@nestjs/common';
-import { AppService } from './app.service';
-import { CreateTodoRequestDTO } from './interfaces/user/dto/create-todo-request.dto';
-import { CreateUserRequestDTO } from './interfaces/user/dto/create-user-request.dto';
+import { Body, Controller, Inject, Post } from '@nestjs/common';
+import { ClientProxy } from '@nestjs/microservices';
+import { CreateUserResponseDTO } from './interfaces/user/dto/create-user-response.dto';
+import { CreateUserDTO } from './interfaces/user/dto/create-user.dto';
+import { IServiceUserCreateResponse } from './interfaces/user/service-user-create-response.interface';
 
 @Controller('api')
-export class AppController {
-  constructor(private readonly appService: AppService) { }
+export class UsersController {
+  constructor(
+    @Inject('USER_SERVICE') private readonly userServiceClient: ClientProxy
+  ) {}
+  
 
-  @Post('user')
-  createUser(@Body() createUserRequest: CreateUserRequestDTO) {
-    this.appService.createUser(createUserRequest);
-  }
+  
 
-  @Post('todo')
-  createTodo(@Body() createTodoRequest: CreateTodoRequestDTO) {
-    this.appService.createTodo(createTodoRequest);
-  }
+  
+  @Post('users')
+  public async createUser(
+    @Body() userRequest: CreateUserDTO
+  ): Promise<CreateUserResponseDTO> {
+    const createUserResponse: IServiceUserCreateResponse
+      = await this.userServiceClient.emit('user_created', userRequest)
+    
+    return {
+      message: createUserResponse.
+    }
+  };
+
 }
 
