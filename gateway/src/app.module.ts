@@ -9,14 +9,6 @@ import { ConfigService } from './services/config/config.service';
       isGlobal: true,
       envFilePath: '../.env'
     }),
-    // ClientsModule.register([{
-    //   name: 'USER_SERVICE',
-    //   transport: Transport.TCP,
-    //   options: {
-    //     port: 8001,
-    //     host: '0.0.0.0'
-    //   }
-    // }])
   ],
   controllers: [UsersController],
   providers: [

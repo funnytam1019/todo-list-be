@@ -13,7 +13,7 @@ async function bootstrap() {
         port: new ConfigService().get('port'),
       },
     } as TcpOptions);
-
-  app.listen().then(() => { console.log('User microservice is listening')});
+    let a = new ConfigService().get('port')
+  app.listen().then(() => { console.log('User microservice is listening', a)});
 }
 bootstrap();

@@ -7,6 +7,7 @@ export class ConfigService {
 
   constructor() {
     this.envConfig = {
+      host: process.env.USER_SERVICE_HOST,
       port: process.env.USER_SERVICE_PORT,
     };
     this.envConfig.baseUri = process.env.BASE_URI;
