@@ -5,9 +5,9 @@ import { ConfigService } from './services/config/config.service'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  console.log(new ConfigService().get('port'));
-  await app.listen(new ConfigService().get('port')).then(() => {
-    console.log('Api gateway is ready for connection');
+  const port = new ConfigService().get('port');
+  await app.listen(port).then(() => {
+    console.log('Api gateway is ready for connection', port);
   });
 }
 bootstrap();
