@@ -45,48 +45,40 @@ export class UserController {
   public async createUser(userParams: IUser): Promise<IUserCreateResponse> {
     let result: IUserCreateResponse = <any>{};
 
-    if(userParams) {
-      const userWithEmail = await this.userService.searchUser({
-        email: userParams.email
-      });
-
-      if(userWithEmail && userWithEmail.length > 0 ) {
-        result = {
-          status: HttpStatus.CONFLICT,
-          message: 'user_create_confict',
-          user: null,
-          errors: {
-            email: {
-              message: 'Email already exists',
-              path: 'email',
-            },
-          },
-        };
-      } else {
-        try {
-        const user = await this.userService.createUser(userParams);
-        result = {
-          status: HttpStatus.CREATED,
-          message: 'user_create_success',
-          user: user,
-          errors: null
-        };
-      } catch(e) {
-        result = {
-          status: HttpStatus.PRECONDITION_FAILED,
-          message: 'user_create_precondition_failed',
-          user: null,
-          errors: e.errors,
-        };
-      }
-      }
-    } else {
+    if(!userParams) {
       result = {
         status: HttpStatus.BAD_REQUEST,
         message: 'user_create_bad_request',
         user: null,
         errors:null,
-      };
+      }; 
+    } else {
+       const userWithEmail = await this.userService.searchUser({
+          email: userParams.email
+        });
+  
+        if(userWithEmail && userWithEmail.length > 0 ) {
+          result.status = HttpStatus.CONFLICT;
+          result.message = 'user_create_conflict';
+          result.user = null;
+          result.errors.email = {
+            message: 'Email already exists',
+            path: 'email'
+          };
+        } else {
+          try {
+          const user = await this.userService.createUser(userParams);
+          result.status = HttpStatus.CREATED;
+          result.message = 'user_create_success';
+          result.user = user;
+          result.errors = null;
+        } catch(e) {
+          result.status = HttpStatus.PRECONDITION_FAILED;
+          result.message = 'user_create_precondition_failed';
+          result.user = null;
+          result.errors = e.errors;
+        }
+        } 
     }
     return result;
   }
