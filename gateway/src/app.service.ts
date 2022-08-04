@@ -9,7 +9,7 @@ export class AppService {
   constructor(
     @Inject('USER_SERVICE') private readonly UserClient: ClientProxy,
     @Inject('TODO_SERVICE') private readonly TodoClient: ClientProxy
-  ) {}
+  ) { }
 
   createUser(createUserRequest: CreateUserRequestDTO) {
     this.UserClient.emit(
@@ -19,9 +19,9 @@ export class AppService {
   }
 
   createTodo(createTodoRequest: CreateTodoRequestDTO) {
-   this.TodoClient.emit(
+    this.TodoClient.emit(
       'todo_created',
       createTodoRequest
-   )
+    )
   }
 }

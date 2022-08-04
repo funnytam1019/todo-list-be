@@ -8,11 +8,11 @@ async function bootstrap() {
     {
       transport: Transport.TCP,
       options: {
-         host: '127.0.0.1',
-         port: 3002
+        host: '127.0.0.1',
+        port: 3002
       }
     },
   );
-  app.listen().then(() => {console.log('User microservice is listening')});
+  app.listen().then(() => { console.log('User microservice is listening') });
 }
 bootstrap();

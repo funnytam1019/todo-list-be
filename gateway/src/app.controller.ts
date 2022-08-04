@@ -5,16 +5,16 @@ import { CreateUserRequestDTO } from './interfaces/user/dto/create-user-request.
 
 @Controller('api')
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(private readonly appService: AppService) { }
 
-   @Post('user')
-   createUser(@Body() createUserRequest: CreateUserRequestDTO) {
-      this.appService.createUser(createUserRequest);
-   }
+  @Post('user')
+  createUser(@Body() createUserRequest: CreateUserRequestDTO) {
+    this.appService.createUser(createUserRequest);
+  }
 
-   @Post('todo')
-   createTodo(@Body() createTodoRequest: CreateTodoRequestDTO) {
-      this.appService.createTodo(createTodoRequest);
-   }
+  @Post('todo')
+  createTodo(@Body() createTodoRequest: CreateTodoRequestDTO) {
+    this.appService.createTodo(createTodoRequest);
+  }
 }
 
