@@ -5,6 +5,7 @@ import { IUser } from 'src/interfaces/user.interface';
 
 @Injectable()
 export class UserService {
+  private readonly tam: any[] = [];
   constructor(
     @InjectModel('User') private readonly userModel: Model<IUser>
   ) {}
