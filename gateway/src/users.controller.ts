@@ -21,7 +21,7 @@ export class UsersController {
 
   @Get(':id')
   public async getUserById(
-    @Param() id: string
+    @Param('id') id: any
   ): Promise<GetUserByIdResponseDTO> {
     const userResponse: IServiceUserGetByIdResponse = 
       await firstValueFrom(
