@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { ClientProxyFactory, ClientsModule } from '@nestjs/microservices';
+import { ClientProxyFactory, ClientsModule, Transport } from '@nestjs/microservices';
 import { UsersController } from './users.controller';
 import { ConfigService } from './services/config/config.service';
 @Module({
@@ -9,6 +9,14 @@ import { ConfigService } from './services/config/config.service';
       isGlobal: true,
       envFilePath: '../.env'
     }),
+    // ClientsModule.register([{
+    //   name: 'USER_SERVICE',
+    //   transport: Transport.TCP,
+    //   options: {
+    //     port: 8001,
+    //     host: '0.0.0.0'
+    //   }
+    // }])
   ],
   controllers: [UsersController],
   providers: [

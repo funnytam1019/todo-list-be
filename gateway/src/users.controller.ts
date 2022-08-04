@@ -9,22 +9,10 @@ export class UsersController {
   constructor(
     @Inject('USER_SERVICE') private readonly userServiceClient: ClientProxy
   ) {}
-  
-  @Get(':id') 
-  public async getUserById(
-    @Param('id') id?: string
-  ): Promise<GetUserByIdResponseDTO> {
-    const userResponse: IServiceUserGetByIdResponse =  await firstValueFrom(
-    this.userServiceClient.send({cmd: 'user_get_by_id'}, {id: id})
-    );
-    
-    return {
-      message: userResponse.message,
-      data: {
-        user: userResponse.user,
-      },
-      errors: null,
-    };
+
+  @Get()
+  getUsers() {
+    return this.userServiceClient.send({cmd: 'get_users'}, {});
   }
 }
 
