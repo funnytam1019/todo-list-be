@@ -1,5 +1,5 @@
 import { Controller, HttpStatus } from '@nestjs/common';
-import { EventPattern, MessagePattern, Payload } from '@nestjs/microservices';
+import { MessagePattern } from '@nestjs/microservices';
 import mongoose from 'mongoose';
 import { IUserCreateResponse } from './interfaces/user-create-response.interface';
 import { IUserSearchResponse } from './interfaces/user-search-response.interface';
@@ -8,6 +8,17 @@ import { UserService } from './services/user.service';
 @Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
+
+
+  @MessagePattern('user_get')
+  public async getUser(params: { email: string }): Promise<IUserSearchResponse> {
+    let result: IUserSearchResponse = <any>{};
+    const user = await this.userService.searchUser(params);
+    result.status = user[0] ? HttpStatus.OK : HttpStatus.NOT_FOUND;
+    result.message = user[0] ? 'user_get_success' : 'user_get_not_found';
+    result.user = user[0] ? user[0] : null;
+    return result;
+  }
 
   @MessagePattern('user_get_by_id')
   public async getUserById(id : any): Promise<IUserSearchResponse> {
@@ -28,17 +39,17 @@ export class UserController {
         result.user = null;
     }
     return result;
-  } 
+  }
 
   @MessagePattern('user_create')
   public async createUser(userParams: IUser): Promise<IUserCreateResponse> {
-    let result: IUserCreateResponse;
+    let result: IUserCreateResponse = <any>{};
 
     if(userParams) {
       const userWithEmail = await this.userService.searchUser({
         email: userParams.email
       });
-      
+
       if(userWithEmail && userWithEmail.length > 0 ) {
         result = {
           status: HttpStatus.CONFLICT,
