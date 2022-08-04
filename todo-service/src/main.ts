@@ -1,9 +1,18 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
+import { MicroserviceOptions, Transport } from '@nestjs/microservices';
+import { TodoModule } from './todo.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  app.setGlobalPrefix('api'); //add prefix before api call
-  await app.listen(8001);
+   const app = await NestFactory.createMicroservice<MicroserviceOptions>(
+      TodoModule,
+      {
+        transport: Transport.TCP,
+        options: {
+         host: '127.0.0.1',
+         port: 3001
+        }
+      },
+    );
+    app.listen().then(() => {console.log('User microservice is listening')});
 }
 bootstrap();

@@ -7,11 +7,9 @@ import { User, UserDocument } from './user.model';
 export class UserService {
    constructor(
       @InjectModel(User.name) private readonly userModel: Model<UserDocument>
-   ) {
-   }
+   ) {}    
 
-   async all() {
-      return this.userModel.find().exec();
+   async createUser(data: any): Promise<User> {
+      return new this.userModel(data).save();
    }
-
 }

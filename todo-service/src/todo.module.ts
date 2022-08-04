@@ -6,9 +6,19 @@ import { TodoService } from './todo.service';
 
 @Module({
    imports: [
+      TypeOrmModule.forRoot({
+         type: 'mysql',
+         host: 'localhost',
+         port: 3306,
+         username: 'root',
+         password: 'T@m1011999',
+         database: 'nest_todo',
+         autoLoadEntities: true, 
+         synchronize: true, 
+      }),
       TypeOrmModule.forFeature([Todo])
    ],
    controllers: [TodoController],
-   providers: [TodoService]
+   providers: [TodoService],
 })
 export class TodoModule {}
