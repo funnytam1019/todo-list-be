@@ -13,7 +13,7 @@ export class UserController {
   public async getUserById(id : any): Promise<IUserSearchResponse> {
     let result: IUserSearchResponse = <any>{};
     let userId = id.replace(/[:]+/g, '');
-    
+
     if(userId) {
       const user = mongoose.isValidObjectId(userId) ?
                     await this.userService.searchUserById(userId) :
@@ -23,11 +23,9 @@ export class UserController {
                               'user_get_by_id_not_found';
       result.user = user;
     } else {
-      result = {
-        status: HttpStatus.BAD_REQUEST,
-        message: 'user_get_by_id_bad_request',
-        user: null
-      }
+        result.status = HttpStatus.BAD_REQUEST;
+        result.message = 'user_get_by_id_bad_request';
+        result.user = null;
     }
     return result;
   } 
