@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
-import { ClientsModule, Transport } from '@nestjs/microservices';
+import { ClientProxyFactory, ClientsModule, Transport } from '@nestjs/microservices';
 import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { ConfigService } from './services/config/config.service';
 
 @Module({
   imports: [
@@ -25,6 +25,19 @@ import { AppService } from './app.service';
     ]),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+      ConfigService,
+      {
+        provide: 'USER_SERVICE',
+        useFactory: (configService: ConfigService) => {
+          const userServiceOptions = configService.get('userService');
+          return ClientProxyFactory.create(userServiceOptions);
+        },
+      }
+    
+    
+    
+    
+  ],
 })
 export class AppModule { }
