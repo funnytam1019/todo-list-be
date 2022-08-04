@@ -5,11 +5,11 @@ import { User, UserDocument } from './user.model';
 
 @Injectable()
 export class UserService {
-   constructor(
-      @InjectModel(User.name) private readonly userModel: Model<UserDocument>
-   ) {}    
+  constructor(
+    @InjectModel(User.name) private readonly userModel: Model<UserDocument>
+  ) { }
 
-   async createUser(data: any): Promise<User> {
-      return new this.userModel(data).save();
-   }
+  async createUser(data: any): Promise<User> {
+    return new this.userModel(data).save();
+  }
 }

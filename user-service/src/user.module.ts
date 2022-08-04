@@ -6,12 +6,12 @@ import { User, UserSchema } from './user.model';
 
 @Module({
   imports: [
-   MongooseModule.forRoot('mongodb://localhost:27017/nest_user', {
+    MongooseModule.forRoot('mongodb://localhost:27017/nest_user', {
       autoCreate: true
-   }),
-   MongooseModule.forFeature([{name: User.name, schema: UserSchema}])
+    }),
+    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }])
   ],
   controllers: [UserController],
   providers: [UserService],
 })
-export class UserModule {}
+export class UserModule { }
