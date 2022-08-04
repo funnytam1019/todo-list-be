@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import mongoose, { Model } from 'mongoose';
 import { IUser } from 'src/interfaces/user.interface';
 
 @Injectable()
@@ -14,7 +14,7 @@ export class UserService {
     return this.userModel.find(params).exec();    
   }
 
-  public async searchUserById(id: string): Promise<IUser> {
+  public async searchUserById(id: any): Promise<IUser> {
     return this.userModel.findById(id).exec();
   }
 

@@ -16,13 +16,13 @@ import { ConfigModule } from '@nestjs/config';
   MongooseModule.forRootAsync({
     useClass: MongoConfigService,
   }),
-    MongooseModule.forFeature([
+  MongooseModule.forFeature([
       {
         name: 'User',
         schema: UserSchema,
         collection: 'users',
       },
-    ]),
+  ]),
   ],
   controllers: [UserController],
   providers: [

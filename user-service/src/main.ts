@@ -4,16 +4,18 @@ import { ConfigService } from './services/config/config.service';
 import { UserModule } from './user.module';
 
 async function bootstrap() {
+  const port = new ConfigService().get('port');
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(
     UserModule,
     {
       transport: Transport.TCP,
       options: {
         host: '0.0.0.0',
-        port: new ConfigService().get('port'),
+        port: port,
       },
     } as TcpOptions);
-    let a = new ConfigService().get('port')
-  app.listen().then(() => { console.log('User microservice is listening', a)});
+  app.listen().then(() => {
+    console.log('User microservice is listening', port);
+  });
 }
 bootstrap();
