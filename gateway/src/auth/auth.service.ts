@@ -9,6 +9,6 @@ export class AuthService {
 
   async validateUser(email: string, password: string)): Promise<any> {
     const user = await this.userServiceClient.send('user_get', params)
-    if(user && user.password === )
+    if(user && user.password === pass)
   }
 }
