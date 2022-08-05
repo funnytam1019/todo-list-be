@@ -7,7 +7,6 @@ import { UserGetResponseDTO } from './interfaces/user/dto/get-user-response.dto'
 import { UserGetDTO } from './interfaces/user/dto/get-user.dto';
 import { IServiceUserCreateResponse } from './interfaces/user/service-user-create-response.interface';
 import { IServiceUserGet } from './interfaces/user/service-user-get-by-id-response.interface';
-import { IUser } from './interfaces/user/user.interface';
 
 @Controller('users')
 export class UsersController {
@@ -51,7 +50,9 @@ export class UsersController {
   }
 
   @Post()
-  public async createUser(@Body() userRequest: CreateUserDTO): Promise<CreateUserResponseDTO> {
+  public async createUser(
+    @Body() userRequest: CreateUserDTO
+    ): Promise<CreateUserResponseDTO> {
     const createUserResponse: IServiceUserCreateResponse = await firstValueFrom(
       this.userServiceClient.send('user_create', userRequest)
     );
@@ -72,6 +73,7 @@ export class UsersController {
       errors: null
     }
   }
+
 }
 
 
