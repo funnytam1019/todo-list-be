@@ -1,6 +1,6 @@
 import { IUser } from "./user.interface";
 
-export interface IServiceUserGet {
+export interface IServiceUserGetResponse {
   status: number;
   message: string;
   user: IUser | null;

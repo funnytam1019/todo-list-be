@@ -1,19 +1,24 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { ClientProxyFactory, ClientsModule, Transport } from '@nestjs/microservices';
+import { ClientProxyFactory } from '@nestjs/microservices';
 import { UsersController } from './users.controller';
 import { ConfigService } from './services/config/config.service';
-import { AuthModule } from './auth/auth.module';
+import { AuthController } from './auth.controller';
+import { AuthService } from './services/auth/auth.service';
+import { LocalStrategy } from './services/auth/local.strategy';
+import { PassportModule } from '@nestjs/passport';
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: '../.env'
     }),
-    AuthModule,
+    PassportModule
   ],
-  controllers: [UsersController],
+  controllers: [UsersController, AuthController],
   providers: [
+      LocalStrategy,
+      AuthService,
       ConfigService,
       {
         provide: 'USER_SERVICE',
@@ -21,7 +26,7 @@ import { AuthModule } from './auth/auth.module';
           const userServiceOptions = configService.get('userService');
           return ClientProxyFactory.create(userServiceOptions);
         },
-        inject: [ConfigService],
+        inject: [ConfigService]
       }
   ],
 })
