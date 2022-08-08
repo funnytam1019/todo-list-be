@@ -3,8 +3,9 @@ import { ConfigModule } from '@nestjs/config';
 import { ClientProxyFactory } from '@nestjs/microservices';
 import { UsersController } from './user.controller';
 import { ConfigService } from './services/config/config.service';
-import { AUthController } from './auth.controller';
+// import { AUthController } from './auth.controller';
 import { AuthModule } from './auth/auth.module';
+import { AppController } from './auth.controller';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -14,8 +15,8 @@ import { AuthModule } from './auth/auth.module';
     AuthModule
   ],
   controllers: [
-    UsersController,
-    AUthController
+    // UsersController,
+    AppController
   ],
   providers: [
     ConfigService,
