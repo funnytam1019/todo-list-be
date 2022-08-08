@@ -1,6 +1,7 @@
-import { Body, Controller, Get, HttpException, HttpStatus, Inject, Param, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, HttpException, HttpStatus, Inject, Param, Post, Request, UseGuards } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { firstValueFrom } from 'rxjs';
+import { LocalAuthGuard } from './auth/local-auth.guard';
 import { CreateUserResponseDTO } from './interfaces/user/dto/create-user-response.dto';
 import { CreateUserDTO } from './interfaces/user/dto/create-user.dto';
 import { UserGetResponseDTO } from './interfaces/user/dto/get-user-response.dto';

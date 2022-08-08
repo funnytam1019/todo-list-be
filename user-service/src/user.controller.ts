@@ -9,10 +9,11 @@ import { UserService } from './services/user.service';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-
   @MessagePattern('user_get')
-  public async getUser(params: { email: string }): Promise<IUserSearchResponse> {
+  public async getUser(params: { email: string }): Promise<IUserSearchResponse> 
+  {
     let result: IUserSearchResponse = <any>{};
+
     const user = await this.userService.searchUser(params);
     result.status = user[0] ? HttpStatus.OK : HttpStatus.NOT_FOUND;
     result.message = user[0] ? 'user_get_success' : 'user_get_not_found';
