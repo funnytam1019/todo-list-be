@@ -1,14 +1,10 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { ClientProxyFactory } from '@nestjs/microservices';
-import { UsersController } from './users.controller';
+import { UsersController } from './user.controller';
 import { ConfigService } from './services/config/config.service';
-import { PassportModule } from '@nestjs/passport';
-import { AuthService } from './services/auth/auth.service';
-import { LocalStrategy } from './services/auth/local.strategy';
-import { AuthController } from './services/auth/auth.controller';
-import { AuthModule } from './services/auth/auth.module';
-
+import { AUthController } from './auth.controller';
+import { AuthModule } from './auth/auth.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -19,6 +15,7 @@ import { AuthModule } from './services/auth/auth.module';
   ],
   controllers: [
     UsersController,
+    AUthController
   ],
   providers: [
     ConfigService,
