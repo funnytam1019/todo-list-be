@@ -1,15 +1,23 @@
-import { Injectable } from '@nestjs/common';
-import { UsersService } from 'src/user/user.service'; 
+import { Inject, Injectable } from '@nestjs/common';
+import { ClientProxy } from '@nestjs/microservices';
+import { firstValueFrom } from 'rxjs';
+import { UserGetDTO } from 'src/interfaces/user/dto/get-user.dto';
+import { IServiceUserGetResponse } from 'src/interfaces/user/service-user-get-by-id-response.interface';
 
 @Injectable()
 export class AuthService {
-  constructor(private usersService: UsersService) {}
+  constructor(
+    @Inject('USER_SERVICE') private readonly userServiceClient: ClientProxy   
+    ) {}
 
-  async validateUser(username: string, pass: string): Promise<any> {
-    const user = await this.usersService.findOne(username);
-    if (user && user.password === pass) {
-      const { password, ...result } = user;
-      return result;
+  async validateUser(email: string, password: string): Promise<any> {
+    const userRequest: UserGetDTO = { email, password };
+    const userResponse: IServiceUserGetResponse = await firstValueFrom(
+      this.userServiceClient.send('user_get', userRequest)
+      )
+    if (userResponse.user &&
+        userResponse.user.password === userRequest.password) {
+      return userResponse.user;
     }
     return null;
   }
