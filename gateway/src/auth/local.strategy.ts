@@ -4,11 +4,13 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { UserGetDTO } from 'src/interfaces/user/dto/get-user.dto';
 
+// this local strategy is call first during local-auth guard
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {
   constructor(private authService: AuthService) {
+    //super({ options }) is used to change the default username field
     super({
-      usernameField: 'email'
+      usernameField: 'email' 
     });
   }
 
