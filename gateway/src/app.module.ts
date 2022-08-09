@@ -4,21 +4,33 @@ import { ClientProxyFactory } from '@nestjs/microservices';
 import { UsersController } from './user.controller';
 import { ConfigService } from './services/config/config.service';
 // import { AUthController } from './auth.controller';
-import { AuthModule } from './auth/auth.module';
 import { AuthController } from './auth.controller';
+import { AuthService } from './auth/auth.service';
+import { JwtModule } from '@nestjs/jwt';
+import { jwtConstants } from './auth/constants';
+import { PassportModule } from '@nestjs/passport';
+import { LocalStrategy } from './auth/local.strategy';
+import { JwtStrategy } from './auth/jwt.strategy';
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: '../.env'
     }),
-    AuthModule
+    JwtModule.register({
+      secret: jwtConstants.secret,
+      signOptions: { expiresIn: "60s"},
+    }),
+    PassportModule
   ],
   controllers: [
     UsersController,
     AuthController
   ],
   providers: [
+    AuthService,
+    LocalStrategy,
+    JwtStrategy,
     ConfigService,
     {
       provide: 'USER_SERVICE',
