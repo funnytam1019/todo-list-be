@@ -7,7 +7,6 @@ import { ConfigService } from './services/config/config.service';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth/auth.service';
 import { JwtModule } from '@nestjs/jwt';
-import { jwtConstants } from './auth/constants';
 import { PassportModule } from '@nestjs/passport';
 import { LocalStrategy } from './auth/local.strategy';
 import { JwtStrategy } from './auth/jwt.strategy';
@@ -18,7 +17,7 @@ import { JwtStrategy } from './auth/jwt.strategy';
       envFilePath: '../.env'
     }),
     JwtModule.register({
-      secret: jwtConstants.secret,
+      secret: new ConfigService().get('jwtKey'),
       signOptions: { expiresIn: "60s"},
     }),
     PassportModule
