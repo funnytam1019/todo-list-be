@@ -1,4 +1,4 @@
-export interface GetUserDTO {
+export class LoginUserDto {
   email: string;
   password: string;
 }
