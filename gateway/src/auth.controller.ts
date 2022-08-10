@@ -10,7 +10,7 @@ export class AuthController {
     private readonly authService: AuthService
   ) {}
   @UseGuards(LocalAuthGuard)
-  @Post('auth/login')
+  @Post('login')
   public async login(
     @Body() userRequest: UserGetDTO
     ) {

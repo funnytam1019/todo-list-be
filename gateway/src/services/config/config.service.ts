@@ -13,6 +13,7 @@ export class ConfigService {
       },
       transport: Transport.TCP,
     };
+    this.envConfig.jwtKey = process.env.JWT_KEY;
   }
 
   get(key: string): any {
