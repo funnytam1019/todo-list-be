@@ -1,6 +1,6 @@
 import { IUser } from "../user.interface";
 
-export interface UserGetResponseDTO {
+export interface GetUserResponseDTO {
   message: string,
   data: {
     user: IUser | null,

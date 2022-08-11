@@ -10,7 +10,7 @@ import {
   Put, 
   Req, 
   Request, 
-  UseGuards } from '@nestjs/common';
+  UseGuards} from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { firstValueFrom } from 'rxjs';
 import { Authorization } from './decorators/authorization.decorator';
@@ -19,13 +19,12 @@ import { IServiveTokenCreateResponse } from './interfaces/token/service-token-cr
 import { IServiceTokenDestroyResponse } from './interfaces/token/service-token-destroy-response.interface';
 import { CreateUserResponseDTO } from './interfaces/user/dto/create-user-response.dto';
 import { CreateUserDTO } from './interfaces/user/dto/create-user.dto';
-import { UserGetResponseDTO } from './interfaces/user/dto/get-user-response.dto';
-import { UserGetDTO } from './interfaces/user/dto/get-user.dto';
+import { GetUserByTokenResponseDto } from './interfaces/user/dto/get-user-by-token-response.dto';
 import { LoginUserResponseDto } from './interfaces/user/dto/login-user-response.dto';
 import { LoginUserDto } from './interfaces/user/dto/login-user.dto';
 import { LogoutUserResponseDto } from './interfaces/user/dto/logout-user-response.dto';
 import { IServiceUserCreateResponse } from './interfaces/user/service-user-create-response.interface';
-import { IServiceUserGetResponse } from './interfaces/user/service-user-get-by-id-response.interface';
+import { IServiceUserGetByIdResponse } from './interfaces/user/service-user-get-by-id-response.interface';
 import { IServiceUserSearchResponse } from './interfaces/user/service-user-search-response.interface';
 
 @Controller('users')
@@ -38,12 +37,15 @@ export class UsersController {
   @Get()
   @Authorization(true)
   public async getUserByToken(
-    @Body() userRequest: UserGetDTO
-  ): Promise<UserGetResponseDTO> {
-    const userResponse: IServiceUserGetResponse =
+    @Req() request: IAuthorizedRequest
+  ): Promise<GetUserByTokenResponseDto> {
+    const userInfo = request.user;
+
+    const userResponse: IServiceUserGetByIdResponse =
       await firstValueFrom(
-        this.userServiceClient.send('user_get', userRequest)
+        this.userServiceClient.send('user_get_by_id', userInfo.id)
       );
+      
       return {
         message: userResponse.message,
         data: {
