@@ -42,7 +42,7 @@ export class TokenService {
 
     if (tokenModel && tokenModel[0]) {
       try {
-        const tokenData = this.jwtService.decode(tokenModel[0].token) as {
+        const tokenData = this.jwtService.verify(tokenModel[0].token) as {
           exp: number;
           userId: any;
         };
