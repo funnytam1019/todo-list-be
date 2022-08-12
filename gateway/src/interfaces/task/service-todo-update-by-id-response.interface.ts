@@ -1,4 +1,4 @@
-import { ITodo } from './task.interface';
+import { ITodo } from './todo.interface';
 
 export interface IServiceTodoUpdateByIdResponse {
   status: number;
