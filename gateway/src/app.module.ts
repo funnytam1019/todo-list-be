@@ -21,16 +21,16 @@ import { AuthGuard } from './services/guards/authorization.guard';
     {
       provide: 'USER_SERVICE',
       useFactory: (configService: ConfigService) => {
-      const userServiceOptions = configService.get('userService');
-      return ClientProxyFactory.create(userServiceOptions);
+        const userServiceOptions = configService.get('userService');
+        return ClientProxyFactory.create(userServiceOptions);
       },
       inject: [ConfigService],
     },
     {
       provide: 'TOKEN_SERVICE',
       useFactory: (configService: ConfigService) => {
-      const userServiceOptions = configService.get('userService');
-      return ClientProxyFactory.create(userServiceOptions);
+        const tokenServiceOptions = configService.get('tokenService');
+        return ClientProxyFactory.create(tokenServiceOptions);
       },
       inject: [ConfigService],
     },
