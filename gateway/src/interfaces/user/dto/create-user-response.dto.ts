@@ -1,6 +1,6 @@
 import { IUser } from "../user.interface";
 
-export class CreateUserResponseDTO {
+export class CreateUserResponseDto {
   message: string;
   data: {
     user: IUser;

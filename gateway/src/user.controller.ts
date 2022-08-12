@@ -17,8 +17,8 @@ import { Authorization } from './decorators/authorization.decorator';
 import { IAuthorizedRequest } from './interfaces/common/authorized-request.interface';
 import { IServiveTokenCreateResponse } from './interfaces/token/service-token-create-response.interface';
 import { IServiceTokenDestroyResponse } from './interfaces/token/service-token-destroy-response.interface';
-import { CreateUserResponseDTO } from './interfaces/user/dto/create-user-response.dto';
-import { CreateUserDTO } from './interfaces/user/dto/create-user.dto';
+import { CreateUserResponseDto } from './interfaces/user/dto/create-user-response.dto';
+import { CreateUserDto } from './interfaces/user/dto/create-user.dto';
 import { GetUserByTokenResponseDto } from './interfaces/user/dto/get-user-by-token-response.dto';
 import { LoginUserResponseDto } from './interfaces/user/dto/login-user-response.dto';
 import { LoginUserDto } from './interfaces/user/dto/login-user.dto';
@@ -57,8 +57,8 @@ export class UsersController {
 
   @Post()
   public async createUser(
-    @Body() userRequest: CreateUserDTO
-    ): Promise<CreateUserResponseDTO> {
+    @Body() userRequest: CreateUserDto
+    ): Promise<CreateUserResponseDto> {
     const createUserResponse: IServiceUserCreateResponse = await firstValueFrom(
       this.userServiceClient.send('user_create', userRequest)
     );
