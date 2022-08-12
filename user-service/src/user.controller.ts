@@ -99,7 +99,7 @@ export class UserController {
         result.status = HttpStatus.CONFLICT;
         result.message = 'user_create_conflict';
         result.user = null;
-        result.errors.email = {
+        result.errors = {
           message: 'Email already exists',
           path: 'email'
         };

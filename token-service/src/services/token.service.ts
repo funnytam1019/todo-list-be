@@ -37,6 +37,7 @@ export class TokenService {
     const tokenModel = await this.tokenModel.find({
       token,
     });
+    console.log('tokenModel is ', tokenModel);
     let result = null;
 
     if (tokenModel && tokenModel[0]) {
